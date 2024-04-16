@@ -10,6 +10,8 @@ public class MovementScript : MonoBehaviour
     private PlayerControls pInput;
     private Vector3 moveDirection;
     private CharacterController cController;
+    private Quaternion moveRotation;
+
     [SerializeField] private int movementSpeed = 2;
     [SerializeField] private float graviticForce = -1;
 
@@ -21,7 +23,7 @@ public class MovementScript : MonoBehaviour
     }
 
     void Update()
-    {
+    {       
         MovementControls();
     }
     private void MovementControls()
@@ -29,11 +31,17 @@ public class MovementScript : MonoBehaviour
         //calculate movedirection using object orientation
         moveDirection = transform.forward * pInput.Player.Movement.ReadValue<Vector2>().y;
         moveDirection += transform.right * pInput.Player.Movement.ReadValue<Vector2>().x;
+
+        if (moveDirection != Vector3.zero)
+        {
+            moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * 10);
+        }
+
         moveDirection.y = graviticForce;
         moveDirection = moveDirection.normalized;
+
         //apply movemement using the character controller
         cController.Move(moveDirection * movementSpeed * Time.deltaTime);
     }
-
 }
-
