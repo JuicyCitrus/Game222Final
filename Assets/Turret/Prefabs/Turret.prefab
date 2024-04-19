@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletCache: 100
-  speed: 5
+  speed: 20
   fireRate: 1
   spawnPoint: {fileID: 6503906887264598727}
   bulletPreFab: {fileID: 8416855864273858959, guid: 71468406425818b4f80920c5bb251c31,
