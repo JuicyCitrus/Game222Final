@@ -39,11 +39,9 @@ public class FireRate : MonoBehaviour
         // Disable all bullets in list
         foreach (Bullet bullet in bullets)
         {
-            Debug.Log(bullet);
             bullet.gameObject.SetActive(false);
         }
 
-        Debug.Log("Stuff outside the for loop is happening");
         bActive = true;
         StartCoroutine(nameof(Firing));
         StartCoroutine(nameof(Aiming));
