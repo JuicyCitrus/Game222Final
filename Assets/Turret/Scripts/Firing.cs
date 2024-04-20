@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireRate : MonoBehaviour
+public class Firing: MonoBehaviour
 {
     [SerializeField]
     private int bulletCache = 100;
@@ -43,7 +43,7 @@ public class FireRate : MonoBehaviour
         }
 
         bActive = true;
-        StartCoroutine(nameof(Firing));
+        StartCoroutine(nameof(Shooting));
         StartCoroutine(nameof(Aiming));
     }
 
@@ -62,7 +62,7 @@ public class FireRate : MonoBehaviour
 
     }
 
-    IEnumerator Firing()
+    IEnumerator Shooting()
     {
         // Bullet bullet;
 

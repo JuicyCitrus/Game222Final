@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e589bf432c286cf41b4de77d16fcaf80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletCache: 100
+  bulletCache: 5
   speed: 20
   fireRate: 1
   spawnPoint: {fileID: 6503906887264598727}

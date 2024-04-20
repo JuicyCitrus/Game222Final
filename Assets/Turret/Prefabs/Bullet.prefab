@@ -228,9 +228,8 @@ MonoBehaviour:
   firingSound: {fileID: -2045399508038253767}
   mRenderer: {fileID: 8056466532611084378}
   cCollider: {fileID: 491584308247258145}
-  lifetime: 2
+  lifetime: 1.5
   damage: 1
-  PH: {fileID: 0}
 --- !u!135 &491584308247258145
 SphereCollider:
   m_ObjectHideFlags: 0

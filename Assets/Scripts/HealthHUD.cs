@@ -10,7 +10,6 @@ public class HealthHUD : MonoBehaviour
 
     public void UpdateHealthBar(float ratio)
     {
-        Debug.Log(ratio);
         healthBar.fillAmount = ratio;
     }
 }

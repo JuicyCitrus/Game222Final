@@ -10,11 +10,26 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 10;
     [SerializeField]
     private HealthHUD HH;
+    [SerializeField]
+    private MovementScript MS;
+    [SerializeField]
+    private GameObject DeathScreen;
 
     private void Start()
     {
         // Set HP to full at the start of the game
         hp = maxHealth;
+    }
+
+    private void Update()
+    {
+        // Death actions
+        if(hp <= 0)
+        {
+            // MS.enabled = false;
+            DeathScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 
     public void UpdateHealth(float value)
