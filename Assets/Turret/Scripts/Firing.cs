@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Firing: MonoBehaviour
@@ -22,9 +24,15 @@ public class Firing: MonoBehaviour
     [SerializeField]
     private Transform target;
 
+    [SerializeField]
+    private MovementScript player;
+
     private List<Bullet> bullets = new List<Bullet>();
 
+    private float distanceToPlayer;
     private bool bActive;
+    public float xCoord;
+    public float zCoord;
 
     // This is called once per session.
     private void Start()
@@ -47,6 +55,26 @@ public class Firing: MonoBehaviour
         StartCoroutine(nameof(Aiming));
     }
 
+    private void Update()
+    {
+        // Get turret coordinates
+        xCoord = this.transform.position.x;
+        zCoord = this.transform.position.z;
+
+        // Generate values for the distance formula from turret to player
+        float xDist = (player.xCoord - xCoord) * (player.xCoord - xCoord);
+        float zDist = (player.zCoord - zCoord) * (player.zCoord - zCoord);
+
+        // Perform distance formula calculation
+        distanceToPlayer = Mathf.Sqrt(xDist + zDist);
+
+        // If player is out of range, stop firing
+        if(distanceToPlayer >= 32)
+        {
+            bActive = false;
+        }
+    }
+
     IEnumerator Aiming()
     {
         Vector3 direction;
@@ -64,8 +92,6 @@ public class Firing: MonoBehaviour
 
     IEnumerator Shooting()
     {
-        // Bullet bullet;
-
         while (bActive)
         {
             yield return new WaitForSeconds(fireRate);
@@ -86,13 +112,6 @@ public class Firing: MonoBehaviour
                     break;
                 }
             }
-
-
-
-            /* bullet = Instantiate(bulletPreFab, spawnPoint).GetComponent<Bullet>();
-            bullet.transform.localPosition = Vector3.zero;
-            bullet.transform.parent = null;
-            bullet.Activate(speed, transform.forward); */
         }
     }
 }

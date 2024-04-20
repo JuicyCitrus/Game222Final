@@ -15,6 +15,9 @@ public class MovementScript : MonoBehaviour
     [SerializeField] private int movementSpeed = 2;
     [SerializeField] private float graviticForce = -1;
 
+    public float xCoord;
+    public float zCoord;
+
     private void Start()
     {
         pInput = new PlayerControls();
@@ -23,7 +26,9 @@ public class MovementScript : MonoBehaviour
     }
 
     void Update()
-    {       
+    {
+        xCoord = this.transform.position.x;
+        zCoord = this.transform.position.z;
         MovementControls();
     }
     private void MovementControls()
