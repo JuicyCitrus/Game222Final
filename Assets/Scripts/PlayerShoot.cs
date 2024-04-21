@@ -1,19 +1,20 @@
-using System.Collections;
+/* using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Firing: MonoBehaviour
+public class PlayerShoot : MonoBehaviour
 {
     [SerializeField]
-    private int bulletCache = 100;
+    private int bulletCache = 5;
+    
+    [SerializeField]
+    private float speed = 20;
 
     [SerializeField]
-    private float speed = 5;
-
-    [SerializeField]
-    private float fireRate = 0.1f;
+    private float fireRate = 1;
 
     [SerializeField]
     private Transform spawnPoint;
@@ -21,18 +22,10 @@ public class Firing: MonoBehaviour
     [SerializeField]
     private GameObject bulletPreFab;
 
-    [SerializeField]
-    private Transform target;
-
-    [SerializeField]
-    private MovementScript player;
-
     private List<Bullet> bullets = new List<Bullet>();
 
-    private float distanceToPlayer;
     private bool bActive;
-    public float xCoord;
-    public float zCoord;
+    private PlayerControls pInput;
 
     private void Start()
     {
@@ -54,21 +47,11 @@ public class Firing: MonoBehaviour
 
     private void Update()
     {
-        // Get turret coordinates
-        xCoord = this.transform.position.x;
-        zCoord = this.transform.position.z;
 
-        // Generate values for the distance formula from turret to player
-        float xDist = (player.xCoord - xCoord) * (player.xCoord - xCoord);
-        float zDist = (player.zCoord - zCoord) * (player.zCoord - zCoord);
-
-        // Perform distance formula calculation
-        distanceToPlayer = Mathf.Sqrt(xDist + zDist);
-
-        // If player is out of range, stop firing
-        if (distanceToPlayer >= 32)
+        // If player is pressing the button for fire, start shooting
+        if (pInput.Player.Fire.)
         {
-            if (bActive == true)
+            if(bActive == true)
             {
                 bActive = false;
             }
@@ -76,28 +59,12 @@ public class Firing: MonoBehaviour
         // If player enters range, start firings
         else if (distanceToPlayer < 32)
         {
-            if (bActive != true)
+            if(bActive != true)
             {
                 bActive = true;
                 StartCoroutine(nameof(Shooting));
-                StartCoroutine(nameof(Aiming));
             }
         }
-    }
-
-    IEnumerator Aiming()
-    {
-        Vector3 direction;
-
-        while (bActive)
-        {
-            direction = target.position - transform.position;
-            direction.y = 0;
-            transform.rotation = Quaternion.LookRotation(direction);
-
-            yield return new WaitForEndOfFrame();
-        }
-
     }
 
     IEnumerator Shooting()
@@ -124,5 +91,4 @@ public class Firing: MonoBehaviour
             }
         }
     }
-}
-
+} */
