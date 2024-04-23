@@ -16,6 +16,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] private float graviticForce = -1;
 
     public float xCoord;
+    public float yCoord;
     public float zCoord;
 
     private void Start()
@@ -28,6 +29,7 @@ public class MovementScript : MonoBehaviour
     void Update()
     {
         xCoord = this.transform.position.x;
+        yCoord = this.transform.position.y;
         zCoord = this.transform.position.z;
         MovementControls();
     }

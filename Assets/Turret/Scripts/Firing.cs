@@ -31,7 +31,9 @@ public class Firing: MonoBehaviour
 
     private float distanceToPlayer;
     private bool bActive;
+
     public float xCoord;
+    public float yCoord;
     public float zCoord;
 
     private void Start()
@@ -56,6 +58,7 @@ public class Firing: MonoBehaviour
     {
         // Get turret coordinates
         xCoord = this.transform.position.x;
+        yCoord = this.transform.position.y;
         zCoord = this.transform.position.z;
 
         // Generate values for the distance formula from turret to player
@@ -66,7 +69,7 @@ public class Firing: MonoBehaviour
         distanceToPlayer = Mathf.Sqrt(xDist + zDist);
 
         // If player is out of range, stop firing
-        if (distanceToPlayer >= 32)
+        if (distanceToPlayer >= 32 || player.yCoord - yCoord > 5)
         {
             if (bActive == true)
             {
@@ -74,7 +77,7 @@ public class Firing: MonoBehaviour
             }
         }
         // If player enters range, start firings
-        else if (distanceToPlayer < 32)
+        else if (distanceToPlayer < 32 || player.yCoord - yCoord < 5)
         {
             if (bActive != true)
             {

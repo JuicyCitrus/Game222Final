@@ -1,7 +1,6 @@
-/* using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +26,18 @@ public class PlayerShoot : MonoBehaviour
     private bool bActive;
     private PlayerControls pInput;
 
+    private void Awake()
+    {
+        pInput = new PlayerControls();
+        pInput.Enable();
+        pInput.Player.Fire.performed += EnableFire;
+        pInput.Player.Fire.canceled += DisableFire;
+    }
+    private void OnDisable()
+    {
+        pInput.Player.Fire.performed -= EnableFire;
+        pInput.Player.Fire.canceled -= DisableFire;
+    }
     private void Start()
     {
         // Instantiate all of the bullets
@@ -43,52 +54,41 @@ public class PlayerShoot : MonoBehaviour
         }
 
         bActive = false;
+        StartCoroutine(nameof(Shooting));
     }
-
-    private void Update()
+    private void EnableFire(InputAction.CallbackContext c)
     {
-
-        // If player is pressing the button for fire, start shooting
-        if (pInput.Player.Fire.)
-        {
-            if(bActive == true)
-            {
-                bActive = false;
-            }
-        }
-        // If player enters range, start firings
-        else if (distanceToPlayer < 32)
-        {
-            if(bActive != true)
-            {
-                bActive = true;
-                StartCoroutine(nameof(Shooting));
-            }
-        }
+        bActive = true;
+    }
+    private void DisableFire(InputAction.CallbackContext c)
+    {
+        bActive = false;
     }
 
     IEnumerator Shooting()
     {
-        while (bActive)
+        while (true)
         {
             yield return new WaitForSeconds(fireRate);
-
-            // Find First Inactive Bullet
-            foreach (Bullet b in bullets)
+            if (bActive)//toggles firing
             {
-                if (!b.BActive)
+                // Find First Inactive Bullet
+                foreach (Bullet b in bullets)
                 {
-                    // Turn on Bullets
-                    b.gameObject.SetActive(true);
+                    if (!b.BActive)
+                    {
+                        // Turn on Bullets
+                        b.gameObject.SetActive(true);
 
-                    // Set Position of Bullet
-                    b.transform.position = spawnPoint.position;
+                        // Set Position of Bullet
+                        b.transform.position = spawnPoint.position;
 
-                    // Activate Bullet
-                    b.Activate(speed, transform.forward);
-                    break;
+                        // Activate Bullet
+                        b.Activate(speed, transform.forward);
+                        break;
+                    }
                 }
             }
         }
     }
-} */
+}

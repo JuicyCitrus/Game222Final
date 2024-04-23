@@ -9,36 +9,31 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField]
     private AudioSource collisionSound;
+
     [SerializeField] 
     private AudioSource firingSound;
 
     [SerializeField]
     private Renderer mRenderer;
+
     [SerializeField]
     private Collider cCollider;
+
     [SerializeField]
     private float lifetime = 5;
+
     [SerializeField]
     private float damage;
 
 
     private float speed = 5;
     private PlayerHealth health;
-
     private Vector3 direction = Vector3.zero;
-
     private bool bActive;
     private float timer;
 
     // Read only
     public bool BActive => bActive;
-
-    // First function to be called when the object is created and called once per session
-    private void Awake()
-    {
-        //firingSound = GetComponent<AudioSource>();
-        //collisionSound = GetComponent<AudioSource>();
-    }
 
     void FixedUpdate()
     {
@@ -94,7 +89,5 @@ public class Bullet : MonoBehaviour
         cCollider.enabled = false;
         bActive = false;
         timer = 0;
-
-        // gameObject.SetActive(false);
     }
 }

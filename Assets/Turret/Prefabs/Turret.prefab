@@ -114,6 +114,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 38849756552d5314b990b06e2f9b1e29, type: 2}
+    - target: {fileID: -5004074729439815274, guid: a780aa83f39cadc4c94b9bdf1e78a0f9,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5004074729439815274, guid: a780aa83f39cadc4c94b9bdf1e78a0f9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5004074729439815274, guid: a780aa83f39cadc4c94b9bdf1e78a0f9,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a780aa83f39cadc4c94b9bdf1e78a0f9,
         type: 3}
       propertyPath: m_Name
@@ -154,13 +169,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e589bf432c286cf41b4de77d16fcaf80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletCache: 5
-  speed: 20
-  fireRate: 1
+  bulletCache: 10
+  speed: 50
+  fireRate: 0.5
   spawnPoint: {fileID: 6503906887264598727}
   bulletPreFab: {fileID: 8416855864273858959, guid: 71468406425818b4f80920c5bb251c31,
     type: 3}
   target: {fileID: 0}
+  player: {fileID: 0}
+  xCoord: 0
+  zCoord: 0
 --- !u!1 &4194256348822720111 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5043459834669865560, guid: a780aa83f39cadc4c94b9bdf1e78a0f9,
