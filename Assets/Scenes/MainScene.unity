@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 89524481}
   - component: {fileID: 89524480}
   - component: {fileID: 89524479}
+  - component: {fileID: 89524482}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -462,6 +463,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &89524482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89524478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966f575da0807ca4c869febdaf062cfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreboard: {fileID: 407180370}
+  totalTurrets: 6
+  victoryScreen: {fileID: 1096975512}
 --- !u!1001 &90030409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2983,12 +2999,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60892efc8d7f1e42bcdc40dc088e6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletCache: 5
+  bulletCache: 10
   speed: 20
   rightSpawnPoint: {fileID: 941927139}
   leftSpawnPoint: {fileID: 1822282788}
   bulletPreFab: {fileID: 8416855864273858959, guid: b3dc593fbb50ffa44a23416f36a1cf00,
     type: 3}
+--- !u!82 &2093419637
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093419622}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 5f3bcc3a92ce6934988535128f813a1d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1636777936803935481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3075,6 +3187,16 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -3732314679363558886, guid: d619574e9128cd644845fd973c44f984,
+        type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 2093419637}
+    - target: {fileID: -3732314679363558886, guid: d619574e9128cd644845fd973c44f984,
+        type: 3}
+      propertyPath: scoreboard
+      value: 
+      objectReference: {fileID: 407180370}
     - target: {fileID: -3732314679363558886, guid: d619574e9128cd644845fd973c44f984,
         type: 3}
       propertyPath: DeathScreen
@@ -3180,6 +3302,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftGunStart
       objectReference: {fileID: 0}
+    - target: {fileID: 5759980986754391997, guid: d619574e9128cd644845fd973c44f984,
+        type: 3}
+      propertyPath: movementSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7428789926619023865, guid: d619574e9128cd644845fd973c44f984,
         type: 3}
       propertyPath: m_Name
@@ -3195,6 +3322,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2093419634}
+    - targetCorrespondingSourceObject: {fileID: 7428789926619023865, guid: d619574e9128cd644845fd973c44f984,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2093419637}
   m_SourcePrefab: {fileID: 100100000, guid: d619574e9128cd644845fd973c44f984, type: 3}
 --- !u!1001 &7967040045051974419
 PrefabInstance:

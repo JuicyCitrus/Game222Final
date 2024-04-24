@@ -19,9 +19,15 @@ public class Scoring : MonoBehaviour
         StartCoroutine(nameof(ScoreUpdate));
     }
 
-    private void Update()
+    public void UpdateScore(int points)
     {
+        score += points;
         scoreText.text = "Score: " + score.ToString();
+    }
+
+    public void StopScoring()
+    {
+        StopCoroutine(nameof(ScoreUpdate));
     }
 
     IEnumerator ScoreUpdate()
@@ -29,7 +35,7 @@ public class Scoring : MonoBehaviour
         while(alive)
         {
             yield return new WaitForSeconds(secondsPerPoint);
-            score++;
+            UpdateScore(1);
         }
     }
 }

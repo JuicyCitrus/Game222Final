@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class Firing: MonoBehaviour
 {
@@ -36,6 +37,16 @@ public class Firing: MonoBehaviour
     public float yCoord;
     public float zCoord;
 
+    private void OnEnable()
+    {
+        PlayerHealth.PlayerDeath += Ceasefire;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealth.PlayerDeath -= Ceasefire;
+    }
+
     private void Start()
     {
         // Instantiate all of the bullets
@@ -52,6 +63,8 @@ public class Firing: MonoBehaviour
         }
 
         bActive = false;
+        StartCoroutine(nameof(Aiming));
+        StartCoroutine(nameof(Shooting));
     }
 
     private void Update()
@@ -77,26 +90,33 @@ public class Firing: MonoBehaviour
             }
         }
         // If player enters range, start firings
-        else if (distanceToPlayer < 32 || Mathf.Abs(player.yCoord - yCoord) < 2)
+        else if (distanceToPlayer < 32 && Mathf.Abs(player.yCoord - yCoord) < 2)
         {
             if (bActive != true)
             {
                 bActive = true;
-                StartCoroutine(nameof(Shooting));
-                StartCoroutine(nameof(Aiming));
             }
         }
     }
+
+    private void Ceasefire()
+    {
+        StopAllCoroutines();
+    }
+
 
     IEnumerator Aiming()
     {
         Vector3 direction;
 
-        while (bActive)
+        while (true)
         {
-            direction = target.position - transform.position;
-            direction.y = 0;
-            transform.rotation = Quaternion.LookRotation(direction);
+            if (bActive)
+            {
+                direction = target.position - transform.position;
+                direction.y = 0;
+                transform.rotation = Quaternion.LookRotation(direction);
+            }
 
             yield return new WaitForEndOfFrame();
         }
@@ -105,24 +125,27 @@ public class Firing: MonoBehaviour
 
     IEnumerator Shooting()
     {
-        while (bActive)
+        while (true)
         {
             yield return new WaitForSeconds(fireRate);
 
-            // Find First Inactive Bullet
-            foreach (Bullet b in bullets)
+            if (bActive) 
             {
-                if (!b.BActive)
+                // Find First Inactive Bullet
+                foreach (Bullet b in bullets)
                 {
-                    // Turn on Bullets
-                    b.gameObject.SetActive(true);
+                    if (!b.BActive)
+                    {
+                        // Turn on Bullets
+                        b.gameObject.SetActive(true);
 
-                    // Set Position of Bullet
-                    b.transform.position = spawnPoint.position;
+                        // Set Position of Bullet
+                        b.transform.position = spawnPoint.position;
 
-                    // Activate Bullet
-                    b.Activate(speed, transform.forward);
-                    break;
+                        // Activate Bullet
+                        b.Activate(speed, transform.forward);
+                        break;
+                    }
                 }
             }
         }

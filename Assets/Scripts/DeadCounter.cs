@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class DeadCounter : MonoBehaviour
 {
+    [SerializeField]
+    private Scoring scoreboard;
+
+    [SerializeField]
+    private int totalTurrets = 0;
+
+    [SerializeField]
+    private GameObject victoryScreen;
+
+    private int destroyedTurrets = 0;
+
     private void OnEnable()
     {
         TurretHealth.TurretDeath += Add;
@@ -14,13 +25,23 @@ public class DeadCounter : MonoBehaviour
         TurretHealth.TurretDeath -= Add;
     }
 
+    private void Update()
+    {
+        if(destroyedTurrets/totalTurrets == 1)
+        {
+            victoryScreen.SetActive(true);
+            scoreboard.StopScoring();
+        }
+    }
+
     private void Add()
     {
+        destroyedTurrets++;
         Score();
     }
 
     private void Score()
     {
-
+        scoreboard.UpdateScore(100);
     }
 }

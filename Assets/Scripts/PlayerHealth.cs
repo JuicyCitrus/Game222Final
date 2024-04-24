@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -25,6 +26,14 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private List<GameObject> playerParts;
 
+    [SerializeField]
+    private AudioSource deathSound;
+
+    [SerializeField]
+    private Scoring scoreboard;
+
+    public static Action PlayerDeath = delegate { };
+
     private bool isDead = false;
 
     private void Start()
@@ -35,21 +44,22 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        // Death actions
+        // Death Actions
         if(hp <= 0 && !isDead)
         {
-            target.transform.position = new Vector3(target.transform.position.x, 20, target.transform.position.z);
             foreach (GameObject part in playerParts)
             {
                 part.AddComponent<Rigidbody>();
                 part.GetComponent<Rigidbody>().useGravity = true;
                 part.GetComponent<Rigidbody>().isKinematic = false;
             }
+            PlayerDeath();
+            deathSound.Play();
+            scoreboard.StopScoring();   
             gameObject.GetComponent<MovementScript>().enabled = false;
             gameObject.GetComponent<PlayerShootTap>().enabled = false;
             DeathScreen.SetActive(true);
             isDead = true;
-            // Time.timeScale = 0;
         }
     }
 
