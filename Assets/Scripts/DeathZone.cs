@@ -9,8 +9,10 @@ public class DeathZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PH = other.GetComponent<PlayerHealth>();
-        damage =  PH.hp;
-        PH.UpdateHealth(damage);
+        if (other.TryGetComponent<PlayerHealth>(out PlayerHealth health))
+        {
+            damage = health.hp;
+            health.UpdateHealth(damage);
+        }
     }
 }

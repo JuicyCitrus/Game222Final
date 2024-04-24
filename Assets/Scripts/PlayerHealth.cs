@@ -6,14 +6,26 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
     public float hp;
+
     [SerializeField]
     public int maxHealth = 10;
+
     [SerializeField]
     private HealthHUD HH;
+
     [SerializeField]
     private MovementScript MS;
+
     [SerializeField]
     private GameObject DeathScreen;
+
+    [SerializeField]
+    private GameObject target;
+
+    [SerializeField]
+    private List<GameObject> playerParts;
+
+    private bool isDead = false;
 
     private void Start()
     {
@@ -24,11 +36,20 @@ public class PlayerHealth : MonoBehaviour
     private void Update()
     {
         // Death actions
-        if(hp <= 0)
+        if(hp <= 0 && !isDead)
         {
-            // MS.enabled = false;
+            target.transform.position = new Vector3(target.transform.position.x, 20, target.transform.position.z);
+            foreach (GameObject part in playerParts)
+            {
+                part.AddComponent<Rigidbody>();
+                part.GetComponent<Rigidbody>().useGravity = true;
+                part.GetComponent<Rigidbody>().isKinematic = false;
+            }
+            gameObject.GetComponent<MovementScript>().enabled = false;
+            gameObject.GetComponent<PlayerShootTap>().enabled = false;
             DeathScreen.SetActive(true);
-            Time.timeScale = 0;
+            isDead = true;
+            // Time.timeScale = 0;
         }
     }
 

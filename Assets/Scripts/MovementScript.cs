@@ -7,13 +7,20 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class MovementScript : MonoBehaviour
 {
+    [SerializeField]
+    private int movementSpeed = 2;
+
+    [SerializeField]
+    private float graviticForce = -1;
+
+    [SerializeField]
+    private GameObject target;
+
     private PlayerControls pInput;
     private Vector3 moveDirection;
     private CharacterController cController;
     private Quaternion moveRotation;
 
-    [SerializeField] private int movementSpeed = 2;
-    [SerializeField] private float graviticForce = -1;
 
     public float xCoord;
     public float yCoord;
@@ -28,9 +35,9 @@ public class MovementScript : MonoBehaviour
 
     void Update()
     {
-        xCoord = this.transform.position.x;
-        yCoord = this.transform.position.y;
-        zCoord = this.transform.position.z;
+        xCoord = target.transform.position.x;
+        yCoord = target.transform.position.y;
+        zCoord = target.transform.position.z;
         MovementControls();
     }
     private void MovementControls()

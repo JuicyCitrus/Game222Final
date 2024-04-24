@@ -69,7 +69,7 @@ public class Firing: MonoBehaviour
         distanceToPlayer = Mathf.Sqrt(xDist + zDist);
 
         // If player is out of range, stop firing
-        if (distanceToPlayer >= 32 || player.yCoord - yCoord > 5)
+        if (distanceToPlayer >= 32 || Mathf.Abs(player.yCoord - yCoord) > 2)
         {
             if (bActive == true)
             {
@@ -77,7 +77,7 @@ public class Firing: MonoBehaviour
             }
         }
         // If player enters range, start firings
-        else if (distanceToPlayer < 32 || player.yCoord - yCoord < 5)
+        else if (distanceToPlayer < 32 || Mathf.Abs(player.yCoord - yCoord) < 2)
         {
             if (bActive != true)
             {

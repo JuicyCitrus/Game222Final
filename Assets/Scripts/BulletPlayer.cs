@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[RequireComponent(typeof(AudioSource))]
-
-public class Bullet : MonoBehaviour
+public class BulletPlayer : MonoBehaviour
 {
     [SerializeField]
     private AudioSource collisionSound;
 
-    [SerializeField] 
+    [SerializeField]
     private AudioSource firingSound;
 
     [SerializeField]
@@ -56,6 +54,7 @@ public class Bullet : MonoBehaviour
         // Set the mRenderer and cCollider back to enabled since they've been disabled in DisableSelf
         mRenderer.enabled = true;
         cCollider.enabled = true;
+        
         if (firingSound)
         {
             firingSound.Play();
@@ -74,8 +73,8 @@ public class Bullet : MonoBehaviour
             collisionSound.Play();
         }
 
-        // Get the Player Health Script and use it to make the player take damage
-        if(other.TryGetComponent<PlayerHealth>(out PlayerHealth health))
+        // Get the Turret Health Script and use it to make the turret take damage
+        if (other.TryGetComponent<TurretHealth>(out TurretHealth health))
         {
             health.UpdateHealth(damage);
         }
