@@ -18,21 +18,26 @@ public class TurretHealth : MonoBehaviour
     [SerializeField]
     private GameObject turret;
 
+    private bool isDead;
     public static Action TurretDeath = delegate { };
 
     private void Start()
     {
         // Set HP to full at the start of the game
+        turret.SetActive(true);
+        isDead = false;
         hp = maxHealth;
+        HH.UpdateHealthBar(hp / maxHealth);
     }
 
     private void Update()
     {
         // Death actions
-        if (hp <= 0)
+        if (hp <= 0 && isDead == false)
         {
             TurretDeath();
             turret.SetActive(false);
+            isDead = true;
         }
     }
 
@@ -44,9 +49,14 @@ public class TurretHealth : MonoBehaviour
         // Update the UI's health bar to be sized at the same ratio as our HP compared to our maximum HP stat
         HH.UpdateHealthBar(hp / maxHealth);
     }
-    public void ResetHealth()
+
+    private void OnEnable()
     {
-        // Reset the our HP to our max HP stat when the function is called.
-        hp = maxHealth;
+        ResetButton.ResetScene += Start;
+    }
+
+    private void OnDisable()
+    {
+        ResetButton.ResetScene -= Start;
     }
 }

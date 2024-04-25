@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 
-public class Firing: MonoBehaviour
+public class Firing : MonoBehaviour
 {
     [SerializeField]
     private int bulletCache = 100;
@@ -40,11 +40,13 @@ public class Firing: MonoBehaviour
     private void OnEnable()
     {
         PlayerHealth.PlayerDeath += Ceasefire;
+        ResetButton.ResetScene += restartShooting;
     }
 
     private void OnDisable()
     {
         PlayerHealth.PlayerDeath -= Ceasefire;
+        ResetButton.ResetScene -= restartShooting;
     }
 
     private void Start()
@@ -99,11 +101,19 @@ public class Firing: MonoBehaviour
         }
     }
 
+    private void restartShooting()
+    {        
+        Debug.Log("restartShooting called");
+
+        bActive = false;
+        StartCoroutine(nameof(Aiming));
+        StartCoroutine(nameof(Shooting));
+    }
+
     private void Ceasefire()
     {
         StopAllCoroutines();
     }
-
 
     IEnumerator Aiming()
     {

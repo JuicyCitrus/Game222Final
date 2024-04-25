@@ -368,7 +368,6 @@ MonoBehaviour:
   maxHealth: 10
   HH: {fileID: 723253526074853310}
   turret: {fileID: 934387232687593110}
-  deathSound: {fileID: 0}
 --- !u!114 &723253526074853310
 MonoBehaviour:
   m_ObjectHideFlags: 0

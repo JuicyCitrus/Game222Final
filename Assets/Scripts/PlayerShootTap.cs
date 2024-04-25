@@ -31,9 +31,17 @@ public class PlayerShootTap : MonoBehaviour
         pInput.Enable();
         pInput.Player.Fire.performed += EnableFire;
     }
+
+    private void OnEnable()
+    {
+        ResetButton.ResetScene += Start;
+        pInput.Player.Fire.performed += EnableFire;
+    }
+
     private void OnDisable()
     {
         pInput.Player.Fire.performed -= EnableFire;
+        ResetButton.ResetScene -= Start;
     }
 
     private void Start()
