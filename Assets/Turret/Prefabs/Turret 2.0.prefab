@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 5560273764325255023}
   - component: {fileID: 5633682456608093813}
   - component: {fileID: 2212049901313976204}
-  - component: {fileID: 7581033582843524269}
   m_Layer: 0
   m_Name: TurretHead
   m_TagString: Untagged
@@ -187,29 +186,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7581033582843524269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452341308428018049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e589bf432c286cf41b4de77d16fcaf80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletCache: 10
-  speed: 50
-  fireRate: 0.5
-  spawnPoint: {fileID: 3535306414915543140}
-  bulletPreFab: {fileID: 8416855864273858959, guid: 71468406425818b4f80920c5bb251c31,
-    type: 3}
-  target: {fileID: 0}
-  player: {fileID: 0}
-  xCoord: 0
-  yCoord: 0
-  zCoord: 0
 --- !u!1 &3391870425867472859
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +263,7 @@ GameObject:
   - component: {fileID: 2120008157073399540}
   - component: {fileID: 4345414852351451423}
   - component: {fileID: 160384975418606175}
+  - component: {fileID: 1843908121288085797}
   m_Layer: 0
   m_Name: Turret 2.0
   m_TagString: Untagged
@@ -360,6 +337,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4, y: 4, z: 4}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &1843908121288085797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760027740661265714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e589bf432c286cf41b4de77d16fcaf80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletCache: 10
+  speed: 20
+  fireRate: 0.5
+  spawnPoint: {fileID: 3535306414915543140}
+  bulletPreFab: {fileID: 8416855864273858959, guid: 71468406425818b4f80920c5bb251c31,
+    type: 3}
+  target: {fileID: 0}
+  player: {fileID: 0}
+  xCoord: 0
+  yCoord: 0
+  zCoord: 0
 --- !u!1 &5936179821027155253
 GameObject:
   m_ObjectHideFlags: 0

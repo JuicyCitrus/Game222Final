@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +15,9 @@ public class Scoring : MonoBehaviour
 
     private void Start()
     {
+        score = 0;
         StartCoroutine(nameof(ScoreUpdate));
+        scoreText.text = "Score: " + score.ToString();
     }
 
     public void UpdateScore(int points)
@@ -28,6 +29,15 @@ public class Scoring : MonoBehaviour
     public void StopScoring()
     {
         StopCoroutine(nameof(ScoreUpdate));
+    }
+
+    private void OnEnable()
+    {
+        ResetButton.ResetScene += Start;
+    }
+    private void OnDisable()
+    {
+        ResetButton.ResetScene -= Start;
     }
 
     IEnumerator ScoreUpdate()

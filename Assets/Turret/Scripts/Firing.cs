@@ -8,13 +8,13 @@ using System;
 public class Firing : MonoBehaviour
 {
     [SerializeField]
-    private int bulletCache = 100;
+    private int bulletCache = 5;
 
     [SerializeField]
-    private float speed = 5;
+    private float speed = 20;
 
     [SerializeField]
-    private float fireRate = 0.1f;
+    private float fireRate = 0.5f;
 
     [SerializeField]
     private Transform spawnPoint;
@@ -24,9 +24,6 @@ public class Firing : MonoBehaviour
 
     [SerializeField]
     private Transform target;
-
-    [SerializeField]
-    private MovementScript player;
 
     private List<Bullet> bullets = new List<Bullet>();
 
@@ -77,14 +74,14 @@ public class Firing : MonoBehaviour
         zCoord = this.transform.position.z;
 
         // Generate values for the distance formula from turret to player
-        float xDist = (player.xCoord - xCoord) * (player.xCoord - xCoord);
-        float zDist = (player.zCoord - zCoord) * (player.zCoord - zCoord);
+        float xDist = (target.transform.position.x - xCoord) * (target.transform.position.x - xCoord);
+        float zDist = (target.transform.position.z - zCoord) * (target.transform.position.z - zCoord);
 
         // Perform distance formula calculation
         distanceToPlayer = Mathf.Sqrt(xDist + zDist);
 
         // If player is out of range, stop firing
-        if (distanceToPlayer >= 32 || Mathf.Abs(player.yCoord - yCoord) > 2)
+        if (distanceToPlayer >= 32 || Mathf.Abs(target.transform.position.y - yCoord) > 2)
         {
             if (bActive == true)
             {
@@ -92,19 +89,23 @@ public class Firing : MonoBehaviour
             }
         }
         // If player enters range, start firings
-        else if (distanceToPlayer < 32 && Mathf.Abs(player.yCoord - yCoord) < 2)
+        else if (distanceToPlayer < 32 && Mathf.Abs(target.transform.position.y - yCoord) < 2)
         {
             if (bActive != true)
             {
                 bActive = true;
             }
         }
+
+        if(this.GetComponent<TurretHealth>().isDead == true)
+        {
+            bActive = false;
+            StopAllCoroutines();
+        }
     }
 
     private void restartShooting()
-    {        
-        Debug.Log("restartShooting called");
-
+    {
         bActive = false;
         StartCoroutine(nameof(Aiming));
         StartCoroutine(nameof(Shooting));

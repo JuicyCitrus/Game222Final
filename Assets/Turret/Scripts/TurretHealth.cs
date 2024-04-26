@@ -18,13 +18,14 @@ public class TurretHealth : MonoBehaviour
     [SerializeField]
     private GameObject turret;
 
-    private bool isDead;
+    public bool isDead;
     public static Action TurretDeath = delegate { };
 
     private void Start()
     {
         // Set HP to full at the start of the game
         turret.SetActive(true);
+        this.GetComponent<BoxCollider>().enabled = true;
         isDead = false;
         hp = maxHealth;
         HH.UpdateHealthBar(hp / maxHealth);
@@ -36,6 +37,7 @@ public class TurretHealth : MonoBehaviour
         if (hp <= 0 && isDead == false)
         {
             TurretDeath();
+            this.GetComponent<BoxCollider>().enabled = false;
             turret.SetActive(false);
             isDead = true;
         }

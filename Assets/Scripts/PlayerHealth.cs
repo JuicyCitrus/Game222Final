@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -22,9 +20,6 @@ public class PlayerHealth : MonoBehaviour
     private GameObject DeathScreen;
 
     [SerializeField]
-    private GameObject target;
-
-    [SerializeField]
     private List<GameObject> playerParts;
 
     [SerializeField]
@@ -39,7 +34,6 @@ public class PlayerHealth : MonoBehaviour
     private List<Vector3> positions = new List<Vector3>();
     private List<Quaternion> rotations = new List<Quaternion>();
     private Quaternion SpawnRot;
-    private Vector3 CCspawn;
 
     private void Awake()
     {
@@ -49,7 +43,6 @@ public class PlayerHealth : MonoBehaviour
             rotations.Add(part.transform.localRotation);
         }
         SpawnRot = this.transform.rotation;
-        CCspawn = this.GetComponent<CharacterController>().transform.position;
     }
 
     private void Start()
@@ -71,10 +64,10 @@ public class PlayerHealth : MonoBehaviour
             PlayerDeath();
             deathSound.Play();
             scoreboard.StopScoring();   
-            gameObject.GetComponent<MovementScript>().enabled = false;
             gameObject.GetComponent<PlayerShootTap>().enabled = false;
             DeathScreen.SetActive(true);
             isDead = true;
+            this.GetComponent<MovementScript>().isDead = true;
         }
     }
 
@@ -108,17 +101,16 @@ public class PlayerHealth : MonoBehaviour
         DeathScreen.SetActive(false);
 
         // Reset the positions of the parts
-        transform.localPosition = new Vector3(0, 0, 0);
+        transform.position = new Vector3(0, 0, 0);
         this.transform.rotation = SpawnRot;
         for (int i = 0; i < playerParts.Count; i++)
         {
-            playerParts[i].transform.position = positions[i];
-            playerParts[i].transform.rotation = rotations[i];
+            playerParts[i].transform.localPosition = positions[i];
+            playerParts[i].transform.localRotation = rotations[i];
         }
-        this.GetComponent<CharacterController>().transform.position = CCspawn;
 
         // Enable the player control scripts
-        gameObject.GetComponent<MovementScript>().enabled = true;
+        this.GetComponent<MovementScript>().isDead = false;
         gameObject.GetComponent<PlayerShootTap>().enabled = true;
     }
 

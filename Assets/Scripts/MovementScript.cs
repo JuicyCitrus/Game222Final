@@ -17,14 +17,12 @@ public class MovementScript : MonoBehaviour
     private float graviticForce = -1;
 
     [SerializeField]
-    private GameObject target;
+    private Transform RespawnPoint;
+
+    public bool isDead = false;
 
     private PlayerControls pInput;
     private CharacterController cController;
-
-    public float xCoord;
-    public float yCoord;
-    public float zCoord;
 
     private void Start()
     {
@@ -33,28 +31,41 @@ public class MovementScript : MonoBehaviour
         cController = GetComponent<CharacterController>();
     }
 
+    private void OnEnable()
+    {
+        ResetButton.ResetScene += Respawn;
+    }
+    private void OnDisable()
+    {
+        ResetButton.ResetScene -= Respawn;
+    }
+
     void Update()
     {
-        xCoord = target.transform.position.x;
-        yCoord = target.transform.position.y;
-        zCoord = target.transform.position.z;
-        MovementControls();
+        if (!isDead)
+        {
+            MovementControls();
+        }
     }
     private void MovementControls()
     {
-        Vector2 movementInput = pInput.Player.Movement.ReadValue<Vector2>();
-        Vector3 moveDirection = new Vector3(movementInput.x, 0f, movementInput.y);
+            Vector2 movementInput = pInput.Player.Movement.ReadValue<Vector2>();
+            Vector3 moveDirection = new Vector3(movementInput.x, 0f, movementInput.y);
 
-        if (moveDirection != Vector3.zero)
-        {
-            float Angle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + transform.eulerAngles.y;
-            Quaternion moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * rotationSpeed);
-        }
+            if (moveDirection != Vector3.zero)
+            {
+                float Angle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + transform.eulerAngles.y;
+                Quaternion moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * rotationSpeed);
+            }
 
-        moveDirection.y = graviticForce;
+            moveDirection.y = graviticForce;
 
-        cController.Move(moveDirection * movementSpeed * Time.deltaTime);
+            cController.Move(moveDirection * movementSpeed * Time.deltaTime);
+    }
+    private void Respawn()
+    {
+        gameObject.transform.position = RespawnPoint.position;
     }
 
         // --- Version 3 ---
