@@ -62,38 +62,39 @@ public class PlayerShootTap : MonoBehaviour
             bullet.gameObject.SetActive(false);
         }
     }
+
     private void EnableFire(InputAction.CallbackContext c)
     {
-        // Find First Inactive Bullet
-        foreach (BulletPlayer b in rightBullets)
-        {
-            if (!b.BActive)
+            // Find First Inactive Bullet
+            foreach (BulletPlayer b in rightBullets)
             {
-                // Turn on Bullets
-                b.gameObject.SetActive(true);
+                if (!b.BActive)
+                {
+                    // Turn on Bullets
+                    b.gameObject.SetActive(true);
 
-                // Set Position of Bullet
-                b.transform.position = rightSpawnPoint.position;
+                    // Set Position of Bullet
+                    b.transform.position = rightSpawnPoint.position;
 
-                // Activate Bullet
-                b.Activate(speed, transform.forward);
-                break;
+                    // Activate Bullet
+                    b.Activate(speed, transform.forward);
+                    break;
+                }
+            }
+            foreach (BulletPlayer b in leftBullets)
+            {
+                if (!b.BActive)
+                {
+                    // Turn on Bullets
+                    b.gameObject.SetActive(true);
+
+                    // Set Position of Bullet
+                    b.transform.position = leftSpawnPoint.position;
+
+                    // Activate Bullet
+                    b.Activate(speed, transform.forward);
+                    break;
+                }
             }
         }
-        foreach (BulletPlayer b in leftBullets)
-        {
-            if (!b.BActive)
-            {
-                // Turn on Bullets
-                b.gameObject.SetActive(true);
-
-                // Set Position of Bullet
-                b.transform.position = leftSpawnPoint.position;
-
-                // Activate Bullet
-                b.Activate(speed, transform.forward);
-                break;
-            }
-        }
-    }
 }

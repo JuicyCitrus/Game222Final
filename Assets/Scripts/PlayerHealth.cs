@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private GameObject DeathScreen;
 
+    [SerializeField] GameObject selectedButton;
+
     [SerializeField]
     private List<GameObject> playerParts;
 
@@ -30,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
 
     public static Action PlayerDeath = delegate { };
 
-    private bool isDead = false;
+    public bool isDead = false;
     private List<Vector3> positions = new List<Vector3>();
     private List<Quaternion> rotations = new List<Quaternion>();
     private Quaternion SpawnRot;
@@ -55,17 +58,33 @@ public class PlayerHealth : MonoBehaviour
         // Death Actions
         if(hp <= 0 && !isDead)
         {
+            // Explosion
             foreach (GameObject part in playerParts)
             {
                 part.AddComponent<Rigidbody>();
                 part.GetComponent<Rigidbody>().useGravity = true;
                 part.GetComponent<Rigidbody>().isKinematic = false;
             }
+
+            // Delegate Call
             PlayerDeath();
+
+            // Death Audio
             deathSound.Play();
-            scoreboard.StopScoring();   
+
+            // Stop the Scoreboard 
+            scoreboard.StopScoring();
+            
+            // Disable Player Input
             gameObject.GetComponent<PlayerShootTap>().enabled = false;
+            gameObject.GetComponent<CharacterController>().enabled = false;
+
+            // Death Menu Set Up
             DeathScreen.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(selectedButton);
+
+            // Bool Control
             isDead = true;
             this.GetComponent<MovementScript>().isDead = true;
         }
@@ -82,6 +101,12 @@ public class PlayerHealth : MonoBehaviour
 
     private void Respawn()
     {
+        // Disable the character controller to allow for the spawn point to be reset
+        if (gameObject.GetComponent<CharacterController>().enabled)
+        {
+            gameObject.GetComponent<CharacterController>().enabled = false;
+        }
+
         // Remove rigidbodies
         if (isDead == true)
         {
@@ -112,6 +137,7 @@ public class PlayerHealth : MonoBehaviour
         // Enable the player control scripts
         this.GetComponent<MovementScript>().isDead = false;
         gameObject.GetComponent<PlayerShootTap>().enabled = true;
+        gameObject.GetComponent<CharacterController>().enabled = true;
     }
 
     private void OnEnable()

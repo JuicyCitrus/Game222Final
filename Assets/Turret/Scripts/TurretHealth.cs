@@ -18,6 +18,9 @@ public class TurretHealth : MonoBehaviour
     [SerializeField]
     private GameObject turret;
 
+    [SerializeField]
+    private AudioSource deathSound;
+
     public bool isDead;
     public static Action TurretDeath = delegate { };
 
@@ -38,6 +41,7 @@ public class TurretHealth : MonoBehaviour
         {
             TurretDeath();
             this.GetComponent<BoxCollider>().enabled = false;
+            deathSound.Play();
             turret.SetActive(false);
             isDead = true;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System;
 
 public class DeadCounter : MonoBehaviour
 {
@@ -18,7 +19,14 @@ public class DeadCounter : MonoBehaviour
     [SerializeField]
     private GameObject SelectedButton;
 
+    [SerializeField]
+    private GameObject Player;
+
     private int destroyedTurrets;
+
+    private bool Won;
+
+    public static event Action Victory = delegate { };
 
     private void OnEnable()
     {
@@ -36,17 +44,31 @@ public class DeadCounter : MonoBehaviour
     {
         victoryScreen.SetActive(false);
         destroyedTurrets = 0;
+        Won = false;
     }
 
     private void Update()
     {
-        if(destroyedTurrets/totalTurrets == 1)
+        if (destroyedTurrets / totalTurrets == 1)
         {
-            victoryScreen.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(SelectedButton);
-            scoreboard.StopScoring();
+            if (!Won)
+            {
+                Vic();
+            }
         }
+    }
+
+    private void Vic()
+    {
+        Won = true;
+        // UI INteractions
+        victoryScreen.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(SelectedButton);
+        scoreboard.StopScoring();
+
+        // Delegate Call
+        Victory();
     }
 
     private void Add()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
@@ -34,10 +35,12 @@ public class MovementScript : MonoBehaviour
     private void OnEnable()
     {
         ResetButton.ResetScene += Respawn;
+        DeadCounter.Victory += Pause;
     }
     private void OnDisable()
     {
         ResetButton.ResetScene -= Respawn;
+        DeadCounter.Victory -= Pause;
     }
 
     void Update()
@@ -65,59 +68,72 @@ public class MovementScript : MonoBehaviour
     }
     private void Respawn()
     {
+        gameObject.GetComponent<CharacterController>().enabled = true;
+        gameObject.GetComponent<PlayerShootTap>().enabled = true;
         gameObject.transform.position = RespawnPoint.position;
     }
 
-        // --- Version 3 ---
+    private void Pause()
+    {
+            // Disable Player Input
+            gameObject.GetComponent<PlayerShootTap>().enabled = false;
+            gameObject.GetComponent<CharacterController>().enabled = false;
 
-        /*// Get movement info from player input
-        Vector2 movementInput = pInput.Player.Movement.ReadValue<Vector2>();
-        Vector3 moveDirection = new Vector3(movementInput.x, 0f, movementInput.y);
+            // Bool Control
+            isDead = true;
+            this.GetComponent<PlayerHealth>().isDead = true;
+    }
 
-        // Get rotation info from player input
-        Vector2 rotateInput = pInput.Player.Rotate.ReadValue<Vector2>();
-        Vector3 rotateDirection = new Vector3(rotateInput.x, 0f, rotateInput.y);
+    // --- Version 3 ---
 
-        // Perform rotation
-        float Angle = Mathf.Atan2(rotateDirection.x, rotateDirection.z) * Mathf.Rad2Deg + transform.eulerAngles.y;
-        Quaternion moveRotation = Quaternion.Euler(0f, Angle, 0f);
-        transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * rotationSpeed);
-       
-        // Apply gravity
-        moveDirection.y = graviticForce;
+    /*// Get movement info from player input
+    Vector2 movementInput = pInput.Player.Movement.ReadValue<Vector2>();
+    Vector3 moveDirection = new Vector3(movementInput.x, 0f, movementInput.y);
 
-        // Perform movement
-        cController.Move(moveDirection * movementSpeed * Time.deltaTime);*/
+    // Get rotation info from player input
+    Vector2 rotateInput = pInput.Player.Rotate.ReadValue<Vector2>();
+    Vector3 rotateDirection = new Vector3(rotateInput.x, 0f, rotateInput.y);
 
+    // Perform rotation
+    float Angle = Mathf.Atan2(rotateDirection.x, rotateDirection.z) * Mathf.Rad2Deg + transform.eulerAngles.y;
+    Quaternion moveRotation = Quaternion.Euler(0f, Angle, 0f);
+    transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * rotationSpeed);
 
-        // --- Version 2 --- 
+    // Apply gravity
+    moveDirection.y = graviticForce;
 
-        /* Vector2 movementInput = pInput.Player.Movement.ReadValue<Vector2>();
-        Vector3 moveDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-
-        if (moveDirection != Vector3.zero)
-        {
-            moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * 10);
-        }
-
-        moveDirection.y = graviticForce;
-
-        cController.Move(moveDirection * movementSpeed * Time.deltaTime); */
+    // Perform movement
+    cController.Move(moveDirection * movementSpeed * Time.deltaTime);*/
 
 
-        // --- Version 1 ---
-        /* moveDirection = transform.forward * pInput.Player.Movement.ReadValue<Vector2>().y;
-        moveDirection += transform.right * pInput.Player.Movement.ReadValue<Vector2>().x;
+    // --- Version 2 --- 
 
-        if (moveDirection != Vector3.zero)
-        {
-            moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * 10);
-        }
+    /* Vector2 movementInput = pInput.Player.Movement.ReadValue<Vector2>();
+    Vector3 moveDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
 
-        moveDirection.y = graviticForce;
-        moveDirection = moveDirection.normalized;
+    if (moveDirection != Vector3.zero)
+    {
+        moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * 10);
+    }
 
-        cController.Move(moveDirection * movementSpeed * Time.deltaTime); */
+    moveDirection.y = graviticForce;
+
+    cController.Move(moveDirection * movementSpeed * Time.deltaTime); */
+
+
+    // --- Version 1 ---
+    /* moveDirection = transform.forward * pInput.Player.Movement.ReadValue<Vector2>().y;
+    moveDirection += transform.right * pInput.Player.Movement.ReadValue<Vector2>().x;
+
+    if (moveDirection != Vector3.zero)
+    {
+        moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, Time.deltaTime * 10);
+    }
+
+    moveDirection.y = graviticForce;
+    moveDirection = moveDirection.normalized;
+
+    cController.Move(moveDirection * movementSpeed * Time.deltaTime); */
 }
